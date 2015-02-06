@@ -40,6 +40,7 @@ class Relay(Resource):
             pprint.pprint(payload)
             return requests.post(url, data=json.dumps(payload), headers=headers)
         else:
+            print 'Access Denied: %s' % request.getClientIP()
             return '<html><body>You are not Ishmael! Only he may talk to me.</body></html>'
 
 root = Resource()
