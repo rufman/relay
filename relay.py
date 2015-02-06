@@ -34,7 +34,7 @@ class Relay(Resource):
         return '<html><body>Relay is running.</body></html>'
 
     def render_POST(self, request):
-        if reqesust.getClientIP() in post_ips:
+        if request.getClientIP() in post_ips:
             print request.args
             payload = make_slack_post(json.loads(request.content.read()))
             pprint.pprint(payload)
