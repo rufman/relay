@@ -34,13 +34,13 @@ class Relay(Resource):
         return '<html><body>Relay is running.</body></html>'
 
     def render_POST(self, request):
-        if request.getClientIP() in post_ips:
+        if request.getAllHeaders().get('x-forwarded-for', None) in post_ips:
             print request.args
             payload = make_slack_post(json.loads(request.content.read()))
             pprint.pprint(payload)
             return requests.post(url, data=json.dumps(payload), headers=headers)
         else:
-            print 'Access Denied: %s' % request.getClientIP()
+            print 'Access Denied: %s' % request.getAllHeaders().get('x-forwarded-for', None)
             return '<html><body>You are not Ishmael! Only he may talk to me.</body></html>'
 
 root = Resource()
